@@ -43,7 +43,7 @@ endif()
 list(APPEND SOURCES raven.cpp)
 
 # Targets
-add_executable(shadow ${SOURCES})
+add_executable(raven ${SOURCES})
 target_link_libraries(shadow)
 
 if(Boost_FOUND)
