@@ -1,5 +1,5 @@
 #!/bin/sh
-# coding: utf-8 -#-
+# -*- coding: utf-8 -*-
 ######################################################################
 # File: configure.sh                            Part of Raven Server #
 #                                                                    #
