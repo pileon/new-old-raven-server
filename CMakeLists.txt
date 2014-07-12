@@ -15,7 +15,7 @@
 #     copyright notice, this list of conditions and the following    #
 #     disclaimer in the documentation and/or other materials         #
 #     provided with the distribution.                                #
-#   o Neither the name of Shadow World nor the names of its          #
+#   o Neither the name of The Raven nor the names of its             #
 #     contributors may be used to endorse or promote products        #
 #     derived from this software without specific prior written      #
 #     permission.                                                    #
@@ -240,6 +240,8 @@ CHECK_CXX_SOURCE_COMPILES("int main() { char s[] = R\"delim(string)delim\"; }"
 # CHECK_CXX_SOURCE_COMPILES("int main() { const char# f = __func__; }")
 
 # TODO: Computed gotos?
+
+# TODO: __attribute__(...) support
 
 ######################################################################
 # TODO: Header files

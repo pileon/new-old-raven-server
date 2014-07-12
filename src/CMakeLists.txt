@@ -15,7 +15,7 @@
 #     copyright notice, this list of conditions and the following    #
 #     disclaimer in the documentation and/or other materials         #
 #     provided with the distribution.                                #
-#   o Neither the name of Shadow World nor the names of its          #
+#   o Neither the name of The Raven nor the names of its             #
 #     contributors may be used to endorse or promote products        #
 #     derived from this software without specific prior written      #
 #     permission.                                                    #
@@ -44,10 +44,10 @@ list(APPEND SOURCES raven.cpp)
 
 # Targets
 add_executable(raven ${SOURCES})
-target_link_libraries(shadow)
+target_link_libraries(raven)
 
 if(Boost_FOUND)
-    target_link_libraries(shadow ${Boost_LIBRARIES})
+    target_link_libraries(raven ${Boost_LIBRARIES})
 endif()
 
 ######################################################################
