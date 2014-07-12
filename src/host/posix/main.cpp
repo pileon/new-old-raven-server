@@ -42,7 +42,7 @@
 
 int main(int argc ATTRIBUTE_UNUSED, char* argv[] ATTRIBUTE_UNUSED)
 {
-
+    return raven::main(argc, argv);
 }
 
 /* **************************************************************** */
