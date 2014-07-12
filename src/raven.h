@@ -38,7 +38,7 @@
 *                                                                    *
 ******************************************************************* */
 
-// #include "host/autoconf.h"
+#include "host/autoconf.h"
 
 namespace raven {
 
