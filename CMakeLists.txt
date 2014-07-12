@@ -378,8 +378,8 @@ if(ENABLE_PROFILING)
 endif()
 
 ######################################################################
-# Subdirectories
-# add_subdirectory(src)
+# Subdirectories and auto-generated files
+add_subdirectory(src)
 
 configure_file(
     "${PROJECT_SOURCE_DIR}/src/host/autoconf.h.in"
