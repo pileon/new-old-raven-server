@@ -175,10 +175,8 @@ set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g -DDEBUG")
 
 if(HAS_FLAG_STD_CXX11)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
-endif()
 elseif(HAS_FLAG_STD_CXX11)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-endif()
 elseif(HAS_FLAG_STD_CXX0X)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 endif()
@@ -190,7 +188,6 @@ if(HAS_FLAG_STDLIB_LIBCXX)
         "int main() { }"
         HAVE_LIBCXX
         FAIL_REGEX "cannot find -lc")
-    message("HAVE_LIBCXX = ${HAVE_LIBCXX}")
     if(HAVE_LIBCXX)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
     endif()
@@ -382,7 +379,7 @@ endif()
 
 ######################################################################
 # Subdirectories
-add_subdirectory(src)
+# add_subdirectory(src)
 
 configure_file(
     "${PROJECT_SOURCE_DIR}/src/host/autoconf.h.in"
