@@ -19,4 +19,11 @@
 #define Raven_Server_VERSION_TAG \
     "@Raven_Server_VERSION_MAJOR@.@Raven_Server_VERSION_MINOR@.@Raven_Server_VERSION_PATCH@@Raven_Server_VERSION_EXTRA@"
 
+#cmakedefine HAVE_ATTRIBUTE_UNUSED
+#ifdef HAVE_ATTRIBUTE_UNUSED
+# define ATTRIBUTE_UNUSED __attribute__((unused))
+#else
+# define ATTRIBUTE_UNUSED
+#endif
+
 #endif //  HOST_AUTOCONF_H__

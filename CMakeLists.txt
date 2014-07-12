@@ -239,9 +239,16 @@ CHECK_CXX_SOURCE_COMPILES("int main() { char s[] = R\"delim(string)delim\"; }"
 # CHECK_CXX_SOURCE_COMPILES("int main() { const char# f = __FUNCTION__; }")
 # CHECK_CXX_SOURCE_COMPILES("int main() { const char# f = __func__; }")
 
-# TODO: Computed gotos?
+CHECK_CXX_SOURCE_COMPILES("int main(int argc __attribute__((unused)), char* argv[] __attribute__((unused))) { }"
+    HAVE_ATTRIBUTE_UNUSED
+    # clang++
+    FAIL_REGEX "warning: unknown attribute 'unused' ignored"
+    # g++
+    FAIL_REGEX "warning: ‘unused’ attribute directive ignored")
 
-# TODO: __attribute__(...) support
+# TODO: more __attribute__(...) support?
+
+# TODO: Computed gotos?
 
 ######################################################################
 # TODO: Header files

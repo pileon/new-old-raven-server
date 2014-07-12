@@ -36,9 +36,11 @@
 *                                                                    *
 ******************************************************************* */
 
+#include "../../raven.h"
+
 /* **************************************************************** */
 
-int main(int argc __attribute__((unused)), char* argv[] __attribute__((unused)))
+int main(int argc ATTRIBUTE_UNUSED, char* argv[] ATTRIBUTE_UNUSED)
 {
 
 }
