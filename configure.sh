@@ -56,4 +56,4 @@ else
     exit 1
 fi
 
-(cd $BUILD_DIR; cmake $CMAKE_FLAGS ..)
+(cd $BUILD_DIR; env CC=$CC CXX=$CXX cmake $CMAKE_FLAGS ..)
