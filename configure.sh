@@ -37,7 +37,7 @@
 #                                                                    #
 ######################################################################
 
-BUILD_TYPE="${$1:-release}"
+BUILD_TYPE="${1-release}"
 BUILD_DIR="build"
 CC="clang"
 CXX="clang++"
