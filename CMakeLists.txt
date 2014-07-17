@@ -270,7 +270,8 @@ CHECK_CXX_SOURCE_COMPILES("int main(int argc __attribute__((unused)), char* argv
 
 include(FindBoost)
 
-find_package(Boost 1.55.0 REQUIRED COMPONENTS program_options log)
+find_package(Boost 1.55.0 REQUIRED COMPONENTS program_options log
+             unit_test_framework)
 
 if(Boost_FOUND)
     include_directories("${Boost_INCLUDE_DIRS}")
@@ -384,6 +385,21 @@ if(ENABLE_PROFILING)
     if (HAS_TEST_COVERAGE)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftest-coverage")
     endif()
+endif()
+
+if(ENABLE_TESTS)
+    enable_testing()
+
+    # List all the tests
+    list(APPEND ALL_TESTS dummy_test)
+
+    # Add all the tests
+    foreach(TEST ${ALL_TESTS})
+        add_test(NAME "${TEST}"
+                 COMMAND "${CMAKE_HOME_DIRECTORY}/build/src/tests/${TEST}"
+                 WORKING_DIRECTORY "${CMAKE_HOME_DIRECTORY}"
+        )
+    endforeach()
 endif()
 
 ######################################################################
