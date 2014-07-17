@@ -53,10 +53,11 @@ if(NOT Raven_Server_VERSION_EXTRA)
         set(Raven_Server_VERSION_EXTRA "")
 endif()
 
+include(CheckCXXSourceCompiles)
+include(CheckCXXCompilerFlag)
+
 ######################################################################
 # Private macros
-
-include(CheckCXXSourceCompiles)
 
 macro(check_header_file HEADER DESTVAR)
     message(STATUS "Looking for header file ${HEADER}")
@@ -107,9 +108,40 @@ macro(check_header_file HEADER DESTVAR)
     endif()
 endmacro()
 
+macro(check_flag_coverage DESTVAR)
+    if(NOT FLAG_COVERAGE_CHECKED)
+        set(FLAG_COVERAGE_CHECKED)
+
+        # For clang++, we might need to link with the profile_rt library
+        if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+            find_library(
+                HAVE_LIBPROFILE_RT
+                profile_rt
+                HINTS /lib /usr/lib /usr/local/lib /opt/lib
+            )
+            if (HAVE_LIBPROFILE_RT)
+                set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lprofile_rt")
+                list(APPEND CMAKE_REQUIRED_LIBRARIES "${HAVE_LIBPROFILE_RT}")
+            endif()
+        endif()
+
+        set(TMP_CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS}")
+        set(TMP_CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
+
+        set(CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS} --coverage")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
+
+        check_cxx_compiler_flag(--coverage ${DESTVAR})
+
+        if(NOT ${DESTVAR})
+            set(CMAKE_REQUIRED_FLAGS "${TMP_CMAKE_REQUIRED_FLAGS}")
+            set(CMAKE_EXE_LINKER_FLAGS "${TMP_CMAKE_EXE_LINKER_FLAGS}")
+        endif()
+    endif()
+endmacro()
+
 ######################################################################
 # Flag handling
-include(CheckCXXCompilerFlag)
 
 check_cxx_compiler_flag(-std=c++1y     HAS_FLAG_STD_CXX1Y)
 check_cxx_compiler_flag(-stdlib=libc++ HAS_FLAG_STDLIB_LIBCXX)
@@ -281,6 +313,7 @@ find_package(Boost 1.55.0 REQUIRED COMPONENTS ${REQUIRED_BOOST_LIBRARIES})
 if(Boost_FOUND)
     include_directories("${Boost_INCLUDE_DIRS}")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DBOOST_ALL_DYN_LINK")
+    list(APPEND CMAKE_REQUIRED_LIBRARIES ${Boost_LIBRARIES})
 endif()
 
 find_path(
@@ -296,7 +329,6 @@ endif()
 
 if(Boost_FOUND)
     set(TEMP_CMAKE_REQUIRED_LIBRARIES, ${CMAKE_REQUIRED_LIBRARIES})
-    list(APPEND CMAKE_REQUIRED_LIBRARIES ${Boost_LIBRARIES})
 endif()
 
 CHECK_CXX_SOURCE_COMPILES("#include <iostream>\nint main() { std::cout << 'c'; }"
@@ -405,6 +437,12 @@ if(ENABLE_TESTS)
                  WORKING_DIRECTORY "${CMAKE_HOME_DIRECTORY}"
         )
     endforeach()
+
+    check_flag_coverage(HAS_FLAG_COVERAGE)
+    if(HAS_FLAG_COVERAGE)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
+
+    endif()
 endif()
 
 ######################################################################
