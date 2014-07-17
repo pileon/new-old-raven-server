@@ -270,8 +270,13 @@ CHECK_CXX_SOURCE_COMPILES("int main(int argc __attribute__((unused)), char* argv
 
 include(FindBoost)
 
-find_package(Boost 1.55.0 REQUIRED COMPONENTS program_options log
-             unit_test_framework)
+list(APPEND REQUIRED_BOOST_LIBRARIES program_options)
+list(APPEND REQUIRED_BOOST_LIBRARIES log)
+if(ENABLE_TESTS)
+    list(APPEND REQUIRED_BOOST_LIBRARIES unit_test_framework)
+endif()
+
+find_package(Boost 1.55.0 REQUIRED COMPONENTS ${REQUIRED_BOOST_LIBRARIES})
 
 if(Boost_FOUND)
     include_directories("${Boost_INCLUDE_DIRS}")
