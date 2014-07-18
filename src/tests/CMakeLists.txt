@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ######################################################################
-# File: src/CMakeLists.txt                      Part of Raven Server #
+# File: src/tests/CMakeLists.txt                Part of Raven Server #
 #                                                                    #
 # Copyright (C) 2012, 2013, Joachim Pileborg and individual          #
 # contributors. All rights reserved.                                 #
@@ -36,22 +36,19 @@
 #                                                                    #
 ######################################################################
 
-# Sources
-if(UNIX)
-    list(APPEND SOURCES host/posix/main.cpp)
-endif()
-list(APPEND SOURCES raven.cpp)
-
 # Targets
-add_executable(raven ${SOURCES})
-target_link_libraries(raven)
+add_executable(dummy_test dummy_test.cpp)
+SET_TARGET_PROPERTIES(dummy_test
+    PROPERTIES
+        COMPILE_FLAGS "-DCMAKE_HOME_DIRECTORY=\"\\\"${CMAKE_HOME_DIRECTORY}\\\"\""
+)
 
-if(Boost_FOUND)
-    target_link_libraries(raven ${Boost_LIBRARIES})
-endif()
+# Add linker libraries
+foreach(TEST ${ALL_TESTS})
+    target_link_libraries(${TEST})
+    if(Boost_FOUND)
+        target_link_libraries(${TEST} ${Boost_LIBRARIES})
+    endif()
+endforeach()
 
 ######################################################################
-
-if(ENABLE_TESTS)
-    add_subdirectory(tests)
-endif()
