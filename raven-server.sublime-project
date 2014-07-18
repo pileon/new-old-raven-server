@@ -20,5 +20,15 @@
             "name": "Configure server",
             "working_dir": "${project_path}/build",
             "cmd": ["cmake", ".."]
+        },
+        {
+            "name": "Run unit tests",
+            "working_dir": "${project_path}",
+            "cmd": ["make", "-C", "build", "test"]
+        },
+        {
+            "name": "Clean",
+            "working_dir": "${project_path}",
+            "cmd": ["make", "-C", "build", "clean"]
         }]
 }
