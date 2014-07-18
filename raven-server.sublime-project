@@ -14,7 +14,7 @@
         {
             "name": "Build server",
             "working_dir": "${project_path}",
-            "cmd": ["make", "-j6", "-C", "${project_path}/build"]
+            "cmd": ["make", "-C", "${project_path}/build"]
         },
         {
             "name": "Configure server",
