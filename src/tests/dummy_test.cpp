@@ -49,14 +49,25 @@
 # define CMAKE_HOME_DIRECTORY "/"
 #endif
 
-BOOST_AUTO_TEST_CASE(dummy_test)
+struct dummy_fixture {
+    dummy_fixture()
+        : cwd{get_current_dir_name()}
+        {}
+    ~dummy_fixture()
+        {
+            ::free(cwd);
+        }
+
+    char* cwd;
+};
+
+BOOST_FIXTURE_TEST_SUITE(dummy_test_suite, dummy_fixture)
+
+BOOST_AUTO_TEST_CASE(dummy_test_check_cmake_home_dir)
 {
-    BOOST_CHECK(true);
-
-    // char cwd[PATH_MAX];
-
-    // BOOST_CHECK(getcwd(cwd, sizeof(cwd)) == nullptr);
-    // BOOST_CHECK(strcmp(cwd, CMAKE_HOME_DIRECTORY) == 0);
+    BOOST_CHECK(strcmp(cwd, CMAKE_HOME_DIRECTORY) == 0);
 }
+
+BOOST_AUTO_TEST_SUITE_END()
 
 /* **************************************************************** */
