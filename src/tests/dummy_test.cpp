@@ -1,6 +1,6 @@
 // -*- mode: C++; coding: utf-8 -*-
 /* *******************************************************************
-* File: raven.cpp                               Part of Raven Server *
+* File: test/dummy_test.cpp                     Part of Raven Server *
 *                                                                    *
 * Copyright (C) 2012, 2013, Joachim Pileborg and individual          *
 * contributors. All rights reserved.                                 *
@@ -36,6 +36,10 @@
 *                                                                    *
 ******************************************************************* */
 
+// This file have a dummy test suit with a dummy test, to test the
+// Boost unit test framework. It can act as a template for future
+// unit tests.
+
 #include "../raven.h"
 
 #include <unistd.h>
@@ -61,6 +65,8 @@ struct dummy_fixture {
     char* cwd;
 };
 
+// Creates a new test suite, where every automatically registered test
+// case will use the `dummy_fixture`.
 BOOST_FIXTURE_TEST_SUITE(dummy_test_suite, dummy_fixture)
 
 BOOST_AUTO_TEST_CASE(dummy_test_check_cmake_home_dir)
