@@ -46,7 +46,7 @@
 /* **************************************************************** */
 
 #ifndef CMAKE_HOME_DIRECTORY
-# define CMAKE_HOME_DIRECTORY "/"
+# define CMAKE_HOME_DIRECTORY ""
 #endif
 
 struct dummy_fixture {
