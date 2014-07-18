@@ -42,6 +42,7 @@
 
 #include "../raven.h"
 
+#include <algorithm>
 #include <unistd.h>
 
 #define BOOST_TEST_MODULE DummyTest
@@ -71,6 +72,8 @@ BOOST_FIXTURE_TEST_SUITE(dummy_test_suite, dummy_fixture)
 
 BOOST_AUTO_TEST_CASE(dummy_test_check_cmake_home_dir)
 {
+    BOOST_REQUIRE(cwd != nullptr);
+
     BOOST_CHECK(strcmp(cwd, CMAKE_HOME_DIRECTORY) == 0);
 }
 
