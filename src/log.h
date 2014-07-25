@@ -38,6 +38,15 @@
 *                                                                    *
 ******************************************************************* */
 
+// Unfortunately Boost generates quite a log of warnings when extra
+// warnings are enabled, at least on Clang. Disable those warnings
+// for now.
+// TODO: Might need to disable some or all of them for GCC as well.
+#pragma clang diagnostic ignored "-Wsign-conversion" 
+#pragma clang diagnostic ignored "-Wshorten-64-to-32"
+#pragma clang diagnostic ignored "-Wdeprecated-register"
+#pragma clang diagnostic ignored "-Wunused-parameter"
+
 #include <boost/log/trivial.hpp>
 
 namespace raven {
