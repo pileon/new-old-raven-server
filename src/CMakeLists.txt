@@ -40,7 +40,7 @@
 if(UNIX)
     list(APPEND SOURCES host/posix/main.cpp)
 endif()
-list(APPEND SOURCES raven.cpp)
+list(APPEND SOURCES raven.cpp log.cpp)
 
 # Targets
 add_executable(raven ${SOURCES})

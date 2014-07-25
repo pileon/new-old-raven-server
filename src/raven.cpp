@@ -44,6 +44,12 @@ namespace raven {
 
 int main(int argc ATTRIBUTE_UNUSED, char* argv[] ATTRIBUTE_UNUSED)
 {
+    log::init();
+
+    LOG(info, "testing the logging");
+
+    log::clean();
+
     return 0;
 }
 

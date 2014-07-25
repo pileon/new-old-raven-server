@@ -1,8 +1,6 @@
 // -*- mode: C++; coding: utf-8 -*-
-#ifndef RAVEN_H_
-#define RAVEN_H_ 1
 /* *******************************************************************
-* File: raven.h                                 Part of Raven Server *
+* File: raven.cpp                               Part of Raven Server *
 *                                                                    *
 * Copyright (C) 2012, 2013, Joachim Pileborg and individual          *
 * contributors. All rights reserved.                                 *
@@ -38,20 +36,24 @@
 *                                                                    *
 ******************************************************************* */
 
-#include "host/autoconf.h"
-
-#include <iostream>
-
-#include "log.h"
+#include "raven.h"
 
 namespace raven {
+namespace log {
 
 /* **************************************************************** */
 
-int main(int argc, char* argv[]);
+void init()
+{
+  BOOST_LOG_TRIVIAL(info) << "hello world";
+}
+
+void clean()
+{
+  BOOST_LOG_TRIVIAL(info) << "goodbye cruel world";
+}
 
 /* **************************************************************** */
 
+} // namespace log
 } // namespace raven
-
-#endif // RAVEN_H_

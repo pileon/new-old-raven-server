@@ -1,8 +1,8 @@
 // -*- mode: C++; coding: utf-8 -*-
-#ifndef RAVEN_H_
-#define RAVEN_H_ 1
+#ifndef LOG_H_
+#define LOG_H_ 1
 /* *******************************************************************
-* File: raven.h                                 Part of Raven Server *
+* File: log.h                                   Part of Raven Server *
 *                                                                    *
 * Copyright (C) 2012, 2013, Joachim Pileborg and individual          *
 * contributors. All rights reserved.                                 *
@@ -38,20 +38,26 @@
 *                                                                    *
 ******************************************************************* */
 
-#include "host/autoconf.h"
-
-#include <iostream>
-
-#include "log.h"
+#include <boost/log/trivial.hpp>
 
 namespace raven {
+namespace log {
 
 /* **************************************************************** */
 
-int main(int argc, char* argv[]);
+void init();
+void clean();
 
 /* **************************************************************** */
 
+} // namespace log
 } // namespace raven
 
-#endif // RAVEN_H_
+/* **************************************************************** */
+
+#define LOG(type, output) \
+    BOOST_LOG_TRIVIAL(type) << output
+
+/* **************************************************************** */
+
+#endif // LOG_H_
