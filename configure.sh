@@ -39,8 +39,8 @@
 
 BUILD_TYPE="${1-release}"
 BUILD_DIR="build"
-CC="clang"
-CXX="clang++"
+CC="${CC:-clang}"
+CXX="${CXX:-clang++}"
 CMAKE_FLAGS=""
 
 [ ! -d $BUILD_DIR ] && mkdir $BUILD_DIR
@@ -56,5 +56,8 @@ else
     echo "Error: Build type must be \"debug\" or \"release\""
     exit 1
 fi
+
+echo "Using CC=$CC"
+echo "Using CXX=$CXX"
 
 (cd $BUILD_DIR; env CC=$CC CXX=$CXX cmake $CMAKE_FLAGS ..)
