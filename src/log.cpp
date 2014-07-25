@@ -43,14 +43,32 @@ namespace log {
 
 /* **************************************************************** */
 
+namespace
+{
+    struct log_initializer
+    {
+        log_initializer()
+        {
+            std::cout << "log_initializer::log_initializer\n";
+        }
+
+        ~log_initializer()
+        {
+            std::cout << "log_initializer::~log_initializer\n";
+        }
+    } log_initializer;
+}
+
+/* **************************************************************** */
+
 void init()
 {
-  BOOST_LOG_TRIVIAL(info) << "hello world";
+    BOOST_LOG_TRIVIAL(info) << "hello world";
 }
 
 void clean()
 {
-  BOOST_LOG_TRIVIAL(info) << "goodbye cruel world";
+    BOOST_LOG_TRIVIAL(info) << "goodbye cruel world";
 }
 
 /* **************************************************************** */
