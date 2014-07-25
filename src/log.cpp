@@ -38,6 +38,12 @@
 
 #include "raven.h"
 
+// #include <memory>
+// #include <boost/log/sinks.hpp>
+// #include <boost/log/expressions.hpp>
+// #include <boost/log/attributes.hpp>
+#include <boost/log/utility/setup/console.hpp>
+
 namespace raven {
 namespace log {
 
@@ -50,6 +56,43 @@ namespace
         log_initializer()
         {
             std::cout << "log_initializer::log_initializer\n";
+
+            // boost::log::add_console_log(
+            //     std::clog, boost::log::keywords::format = ">> %Message%");
+
+            // namespace sinks = boost::log::sinks;
+            // namespace expr = boost::log::expressions;
+            // namespace attrs = boost::log::attributes;
+
+            // using text_sink = sinks::synchronous_sink<sinks::text_ostream_backend>;
+            // auto sink = std::make_shared<text_sink>();
+
+            // sink->locked_backend()->add_stream(std::make_shared<std::ostream>(std::clog));
+
+            // // sink->set_formatter(
+            // //     expr::stream
+            // //         << expr::attr<attrs::timer::value_type>("Timeline")
+            // //         << expr::smessage
+            // //     );
+
+            // // boost::log::core::get()->add_sink(sink);
+
+  // typedef sinks::synchronous_sink< sinks::text_ostream_backend > text_sink;
+  //   boost::shared_ptr< text_sink > sink = boost::make_shared< text_sink >();
+
+  //   sink->locked_backend()->add_stream(
+  //       boost::make_shared< std::ofstream >("sample.log"));
+
+  //   sink->set_formatter
+  //   (
+  //       expr::stream
+  //              // line id will be written in hex, 8-digits, zero-filled
+  //           << std::hex << std::setw(8) << std::setfill('0') << expr::attr< unsigned int >("LineID")
+  //           << ": <" << logging::trivial::severity
+  //           << "> " << expr::smessage
+  //   );
+
+  //   logging::core::get()->add_sink(sink);
         }
 
         ~log_initializer()
