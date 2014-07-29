@@ -3,7 +3,7 @@
         {
             "path": ".",
             "folder_exclude_patterns": [
-                ".git"
+                ".git", "build"
                 ],
             "file_exclude_patterns": [
                 "*.sublime-project", "*.sublime-workspace"
@@ -18,12 +18,22 @@
     "build_systems": [
         {
             "name": "Build server",
-            "working_dir": "${project_path}/build",
-            "cmd": ["make", "-j6", "-C", "${project_path}/build"]
+            "working_dir": "${project_path}",
+            "cmd": ["make", "-C", "${project_path}/build"]
         },
         {
             "name": "Configure server",
             "working_dir": "${project_path}/build",
             "cmd": ["cmake", ".."]
+        },
+        {
+            "name": "Run unit tests",
+            "working_dir": "${project_path}",
+            "cmd": ["make", "-C", "build", "test"]
+        },
+        {
+            "name": "Clean",
+            "working_dir": "${project_path}",
+            "cmd": ["make", "-C", "build", "clean"]
         }]
 }
