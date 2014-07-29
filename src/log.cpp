@@ -57,6 +57,9 @@ namespace
         {
             std::cout << "log_initializer::log_initializer\n";
 
+            // TODO: If needed, set output to a file, otherwise use `std::clog`
+            // TODO: Change output format
+
             // boost::log::add_console_log(
             //     std::clog, boost::log::keywords::format = ">> %Message%");
 
