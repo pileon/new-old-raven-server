@@ -44,7 +44,11 @@
 // #include <boost/log/expressions/formatters/date_time.hpp>
 // #include <boost/log/attributes.hpp>
 // #include <boost/log/utility/setup/console.hpp>
+#include <boost/log/expressions/formatters/date_time.hpp>
+#include <boost/log/support/date_time.hpp>
 #include <boost/utility/empty_deleter.hpp>
+#include <boost/date_time.hpp>
+
 #include <iomanip>
 
 namespace raven {
@@ -68,17 +72,30 @@ namespace
             boost::shared_ptr<std::ostream> stream(&std::clog, boost::empty_deleter());
             sink->locked_backend()->add_stream(stream);
 
+            sink->set_formatter(
+                expr::format("%1%:[%2%] %3%")
+                        % expr::attr< boost::posix_time::ptime >("TimeStamp")
+                        % expr::attr< int >("Severity")
+                        % expr::smessage
+                );
+
             // sink->set_formatter(
             //     expr::stream
             //         << expr::format_date_time<boost::posix_time::ptime>("TimeStamp", "%Y-%m-%d %H:%M:%S")
             //         << expr::smessage
             //     );
 
-            sink->set_formatter(
-                expr::stream
-                    << " :: " << boost::log::trivial::severity << " :: "
-                    << expr::smessage
-                );
+            // sink->set_formatter(
+            //     expr::stream << expr::attr< boost::posix_time::ptime >("TimeStamp")
+            //     );
+
+            // sink->set_formatter(
+            //     expr::stream
+            //         // << " :: " << boost::log::trivial::severity << " :: "
+            //         << expr::smessage
+            //         << expr::attr<int>("Severity")
+            //         << expr::format_date_time<boost::posix_time::ptime>("TimeStamp", "%Y-%m-%d %H:%M:%S")
+            //     );
 
             boost::log::core::get()->add_sink(sink);
         }
