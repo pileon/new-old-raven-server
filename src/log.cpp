@@ -58,8 +58,6 @@ namespace
     {
         log_initializer()
         {
-            std::cout << "log_initializer::log_initializer\n";
-
             namespace sinks = boost::log::sinks;
             namespace expr = boost::log::expressions;
             namespace attrs = boost::log::attributes;
@@ -78,7 +76,7 @@ namespace
 
             sink->set_formatter(
                 expr::stream
-                    << " :: " << std::left << std::setw(10) << boost::log::trivial::severity << " :: "
+                    << " :: " << boost::log::trivial::severity << " :: "
                     << expr::smessage
                 );
 
@@ -87,7 +85,6 @@ namespace
 
         ~log_initializer()
         {
-            std::cout << "log_initializer::~log_initializer\n";
         }
     } log_initializer;
 }
