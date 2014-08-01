@@ -38,18 +38,11 @@
 
 #include "raven.h"
 
-// #include <memory>
 #include <boost/log/sinks.hpp>
 #include <boost/log/expressions.hpp>
-// #include <boost/log/expressions/formatters/date_time.hpp>
-// #include <boost/log/attributes.hpp>
-// #include <boost/log/utility/setup/console.hpp>
-#include <boost/log/expressions/formatters/date_time.hpp>
 #include <boost/log/support/date_time.hpp>
 #include <boost/utility/empty_deleter.hpp>
-#include <boost/date_time.hpp>
-
-#include <iomanip>
+#include <boost/log/utility/setup/common_attributes.hpp>
 
 namespace raven {
 namespace log {
@@ -62,6 +55,8 @@ namespace
     {
         log_initializer()
         {
+            boost::log::add_common_attributes();
+
             namespace sinks = boost::log::sinks;
             namespace expr = boost::log::expressions;
             namespace attrs = boost::log::attributes;
@@ -73,29 +68,11 @@ namespace
             sink->locked_backend()->add_stream(stream);
 
             sink->set_formatter(
-                expr::format("%1%:[%2%] %3%")
-                        % expr::attr< boost::posix_time::ptime >("TimeStamp")
-                        % expr::attr< int >("Severity")
-                        % expr::smessage
+                expr::stream
+                    << expr::format_date_time<boost::posix_time::ptime>("TimeStamp", "%Y-%m-%d %H:%M:%S")
+                    << " :: " << boost::log::trivial::severity
+                    << " :: " << expr::smessage
                 );
-
-            // sink->set_formatter(
-            //     expr::stream
-            //         << expr::format_date_time<boost::posix_time::ptime>("TimeStamp", "%Y-%m-%d %H:%M:%S")
-            //         << expr::smessage
-            //     );
-
-            // sink->set_formatter(
-            //     expr::stream << expr::attr< boost::posix_time::ptime >("TimeStamp")
-            //     );
-
-            // sink->set_formatter(
-            //     expr::stream
-            //         // << " :: " << boost::log::trivial::severity << " :: "
-            //         << expr::smessage
-            //         << expr::attr<int>("Severity")
-            //         << expr::format_date_time<boost::posix_time::ptime>("TimeStamp", "%Y-%m-%d %H:%M:%S")
-            //     );
 
             boost::log::core::get()->add_sink(sink);
         }
