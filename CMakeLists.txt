@@ -302,11 +302,14 @@ CHECK_CXX_SOURCE_COMPILES("int main(int argc __attribute__((unused)), char* argv
 
 include(FindBoost)
 
-list(APPEND REQUIRED_BOOST_LIBRARIES program_options)
-list(APPEND REQUIRED_BOOST_LIBRARIES log)
 if(ENABLE_TESTS)
     list(APPEND REQUIRED_BOOST_LIBRARIES unit_test_framework)
 endif()
+list(APPEND REQUIRED_BOOST_LIBRARIES program_options)
+list(APPEND REQUIRED_BOOST_LIBRARIES log)
+list(APPEND REQUIRED_BOOST_LIBRARIES log_setup)
+list(APPEND REQUIRED_BOOST_LIBRARIES thread)
+list(APPEND REQUIRED_BOOST_LIBRARIES system)
 
 find_package(Boost 1.55.0 REQUIRED COMPONENTS ${REQUIRED_BOOST_LIBRARIES})
 

@@ -1,8 +1,6 @@
 // -*- mode: C++; coding: utf-8 -*-
-#ifndef RAVEN_H_
-#define RAVEN_H_ 1
 /* *******************************************************************
-* File: raven.h                                 Part of Raven Server *
+* File: raven.cpp                               Part of Raven Server *
 *                                                                    *
 * Copyright (C) 2012, 2013, Joachim Pileborg and individual          *
 * contributors. All rights reserved.                                 *
@@ -38,20 +36,66 @@
 *                                                                    *
 ******************************************************************* */
 
-#include "host/autoconf.h"
+#include "raven.h"
 
-#include <iostream>
-
-#include "log.h"
+#include <boost/log/sinks.hpp>
+#include <boost/log/expressions.hpp>
+#include <boost/log/support/date_time.hpp>
+#include <boost/utility/empty_deleter.hpp>
+#include <boost/log/utility/setup/common_attributes.hpp>
 
 namespace raven {
+namespace log {
 
 /* **************************************************************** */
 
-int main(int argc, char* argv[]);
+namespace
+{
+    struct log_initializer
+    {
+        log_initializer()
+        {
+            boost::log::add_common_attributes();
+
+            namespace sinks = boost::log::sinks;
+            namespace expr = boost::log::expressions;
+            namespace attrs = boost::log::attributes;
+
+            using text_sink = sinks::synchronous_sink<sinks::text_ostream_backend>;
+            auto sink = boost::make_shared<text_sink>();
+
+            boost::shared_ptr<std::ostream> stream(&std::clog, boost::empty_deleter());
+            sink->locked_backend()->add_stream(stream);
+
+            sink->set_formatter(
+                expr::stream
+                    << expr::format_date_time<boost::posix_time::ptime>("TimeStamp", "%Y-%m-%d %H:%M:%S")
+                    << " :: " << boost::log::trivial::severity
+                    << " :: " << expr::smessage
+                );
+
+            boost::log::core::get()->add_sink(sink);
+        }
+
+        ~log_initializer()
+        {
+        }
+    } log_initializer;
+}
 
 /* **************************************************************** */
 
+void init()
+{
+    BOOST_LOG_TRIVIAL(info) << "hello world";
+}
+
+void clean()
+{
+    BOOST_LOG_TRIVIAL(info) << "goodbye cruel world";
+}
+
+/* **************************************************************** */
+
+} // namespace log
 } // namespace raven
-
-#endif // RAVEN_H_
